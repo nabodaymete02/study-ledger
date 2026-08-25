@@ -31,6 +31,12 @@ const BLOCK_TYPES = [
       cards: [{ id: generateId(), question: '', answer: '' }],
     }),
   },
+  { key: 'image', label: 'Image', factory: () => ({ type: 'image', url: '', alt: '' }) },
+  {
+    key: 'link',
+    label: 'Link',
+    factory: () => ({ type: 'link', url: '', label: '', youtubeId: null }),
+  },
 ]
 
 export default function AddBlockToolbar({ onAdd }) {

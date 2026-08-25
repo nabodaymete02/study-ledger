@@ -1,12 +1,11 @@
-.ledger-view {
-  max-width: 720px;
+.subject-edit {
+  max-width: 760px;
   margin: 0 auto;
   padding: 48px 24px 96px;
 }
 
 .back-link {
   display: inline-block;
-  margin-bottom: 24px;
   color: var(--muted);
   text-decoration: none;
   font-size: 0.9rem;
@@ -16,31 +15,34 @@
   color: var(--ink);
 }
 
-.ledger-view h1 {
+.subject-edit-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.subject-edit h1 {
   margin: 0 0 8px;
 }
 
-.ledger-view-desc {
+.subject-edit-desc {
   color: var(--muted);
   margin: 0 0 24px;
 }
 
-.ledger-view-placeholder {
+.subject-edit-empty,
+.subject-edit-error {
   color: var(--muted);
   font-style: italic;
   margin: 0 0 24px;
 }
 
-.section-list {
-  list-style: none;
-  margin: 0 0 24px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.subject-edit-error {
+  color: var(--flag);
 }
 
-.ledger-tracker {
+.subject-edit-tracker {
   position: sticky;
   top: 0;
   z-index: 10;
@@ -53,38 +55,32 @@
   border-bottom: 1px solid var(--line);
 }
 
-.ledger-tracker-count {
+.subject-edit-tracker-count {
   font-family: var(--mono);
   font-size: 0.8rem;
   color: var(--muted);
   white-space: nowrap;
 }
 
-.ledger-tracker-count b {
+.subject-edit-tracker-count b {
   color: var(--ink);
   font-weight: 600;
 }
 
-.ledger-tracker .progress-bar {
+.subject-edit-tracker .progress-bar {
   flex: 1;
 }
 
-.ledger-tracker-revise {
-  padding: 5px 12px;
-  font-size: 0.82rem;
-  white-space: nowrap;
-}
-
 @media (max-width: 640px) {
-  .ledger-view {
+  .subject-edit {
     padding: 40px 16px 72px;
   }
 
-  .ledger-tracker {
+  .subject-edit-tracker {
     flex-wrap: wrap;
   }
 
-  .ledger-tracker .progress-bar {
+  .subject-edit-tracker .progress-bar {
     order: 3;
     flex: 1 1 100%;
   }

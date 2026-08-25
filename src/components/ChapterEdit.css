@@ -1,0 +1,61 @@
+.chapter-edit {
+  padding: 20px;
+  margin-bottom: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.chapter-edit-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.chapter-edit-index {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.chapter-edit-title {
+  flex: 1;
+  margin: 0;
+  font-size: 1.4rem;
+  cursor: text;
+}
+
+.chapter-edit-title:hover {
+  color: var(--accent-ink);
+}
+
+.chapter-edit-title-input {
+  flex: 1;
+  padding: 4px 8px;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  background: var(--surface2);
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.chapter-edit-empty {
+  color: var(--muted);
+  font-style: italic;
+  margin: 0 0 16px;
+}
+
+.section-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

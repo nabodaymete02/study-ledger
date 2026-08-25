@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { getLedger } from '../data/index.js'
+import { getSubject, findChapterForSection } from '../data/index.js'
 import './RevisionMode.css'
 
 function shuffle(items) {
@@ -27,34 +27,54 @@ function collectCards(sections) {
 }
 
 export default function RevisionMode() {
-  const { ledgerId, sectionId } = useParams()
-  const [ledger] = useState(() => getLedger(ledgerId))
+  const { subjectId, sectionId } = useParams()
+  const [subject, setSubject] = useState(null)
+  const [loadError, setLoadError] = useState(null)
 
-  const section = sectionId ? ledger?.sections.find((s) => s.id === sectionId) : null
+  useEffect(() => {
+    getSubject(subjectId)
+      .then(setSubject)
+      .catch((err) => setLoadError(err.message))
+  }, [subjectId])
+
+  const section = sectionId
+    ? findChapterForSection(subject ?? { chapters: [] }, sectionId)?.sections.find(
+        (s) => s.id === sectionId,
+      )
+    : null
+
   const cards = useMemo(() => {
-    if (!ledger) return []
-    const scope = section ? [section] : ledger.sections
+    if (!subject) return []
+    const scope = section ? [section] : subject.chapters.flatMap((c) => c.sections)
     return shuffle(collectCards(scope))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ledger, sectionId])
+  }, [subject, sectionId])
 
   const [index, setIndex] = useState(0)
   const [isRevealed, setIsRevealed] = useState(false)
   const [tally, setTally] = useState({ correct: 0, incorrect: 0 })
   const [isFinished, setIsFinished] = useState(false)
 
-  if (!ledger) {
+  if (loadError) {
     return (
       <main className="revision-mode">
         <Link to="/" className="back-link">
           &larr; Dashboard
         </Link>
-        <p>Ledger not found.</p>
+        <p className="revision-empty">Couldn&rsquo;t load this subject ({loadError}).</p>
       </main>
     )
   }
 
-  const scopeTitle = section ? section.title : ledger.title
+  if (!subject) {
+    return (
+      <main className="revision-mode">
+        <p className="dashboard-empty">Loading…</p>
+      </main>
+    )
+  }
+
+  const scopeTitle = section ? section.title : subject.title
 
   function handleGrade(isCorrect) {
     setTally((prev) => ({
@@ -80,8 +100,8 @@ export default function RevisionMode() {
   if (cards.length === 0) {
     return (
       <main className="revision-mode">
-        <Link to={`/ledger/${ledger.id}`} className="back-link">
-          &larr; {ledger.title}
+        <Link to={`/subject/${subject.id}`} className="back-link">
+          &larr; {subject.title}
         </Link>
         <h1>Revise {scopeTitle}</h1>
         <p className="revision-empty">
@@ -94,8 +114,8 @@ export default function RevisionMode() {
   if (isFinished) {
     return (
       <main className="revision-mode">
-        <Link to={`/ledger/${ledger.id}`} className="back-link">
-          &larr; {ledger.title}
+        <Link to={`/subject/${subject.id}`} className="back-link">
+          &larr; {subject.title}
         </Link>
         <h1>Revision complete</h1>
         <p className="revision-score">
@@ -105,8 +125,8 @@ export default function RevisionMode() {
           <button type="button" className="btn-accent" onClick={handleRestart}>
             Revise again
           </button>
-          <Link to={`/ledger/${ledger.id}`} className="btn-ghost">
-            Back to ledger
+          <Link to={`/subject/${subject.id}`} className="btn-ghost">
+            Back to subject
           </Link>
         </div>
       </main>
@@ -117,8 +137,8 @@ export default function RevisionMode() {
 
   return (
     <main className="revision-mode">
-      <Link to={`/ledger/${ledger.id}`} className="back-link">
-        &larr; {ledger.title}
+      <Link to={`/subject/${subject.id}`} className="back-link">
+        &larr; {subject.title}
       </Link>
       <h1>Revise {scopeTitle}</h1>
       <div className="revision-progress">

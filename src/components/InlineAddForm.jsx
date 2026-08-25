@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import './AddSectionForm.css'
+import './InlineAddForm.css'
 
-export default function AddSectionForm({ onAdd, onCancel }) {
+export default function InlineAddForm({ placeholder, submitLabel = 'Add', onAdd, onCancel }) {
   const [title, setTitle] = useState('')
 
   function handleSubmit(e) {
@@ -12,17 +12,17 @@ export default function AddSectionForm({ onAdd, onCancel }) {
   }
 
   return (
-    <form className="add-section-form" onSubmit={handleSubmit}>
+    <form className="inline-add-form" onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Section title"
+        placeholder={placeholder}
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         autoFocus
       />
-      <div className="add-section-form-actions">
+      <div className="inline-add-form-actions">
         <button type="submit" className="btn-accent" disabled={!title.trim()}>
-          Add
+          {submitLabel}
         </button>
         <button type="button" className="btn-ghost" onClick={onCancel}>
           Cancel

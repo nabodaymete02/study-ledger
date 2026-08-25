@@ -1,12 +1,13 @@
 # Study Ledger
 
 A note-taking app built around a simple idea: notes you write once and never
-reopen aren't worth much. Study Ledger organizes material into short, numbered
-sections you can check off, quiz yourself on, and scan back through later,
-instead of one long page of prose.
+reopen aren't worth much. Study Ledger organizes material into subjects,
+chapters, and short, numbered sections you can check off, quiz yourself on,
+and scan back through later, instead of one long page of prose.
 
-Each topic gets its own ledger. A ledger is a list of sections, and each
-section can mix a few kinds of content:
+Each topic gets its own **subject**. A subject is organized into
+**chapters**, each chapter into **sections**, and each section can mix a few
+kinds of content:
 
 - plain paragraphs
 - definition rows (term / meaning pairs) for vocab and quick facts
@@ -15,16 +16,20 @@ section can mix a few kinds of content:
 - reference blocks with a copy button, for commands or snippets meant to be
   pasted verbatim
 - flashcards with the answer hidden behind a reveal toggle
-- a "reviewed" checkbox per section, which feeds a progress bar for the whole
-  ledger
+- images — paste one from the clipboard or pick a file
+- links, with YouTube URLs shown as a clickable thumbnail
+- a "reviewed" checkbox per section, which feeds a progress bar for the
+  whole subject
 
-Everything is stored locally in the browser — there's no account and no
-server component.
+Every subject has two views: a clean **read-only view** for actually
+studying from, and a separate **edit** mode for authoring. Data is stored
+locally as real files under `data/`, organized subject-by-subject — no
+account, no cloud, no external server.
 
 ## Stack
 
-- React 18
-- Vite
+- React 18 + Vite
+- Express (a small local API under `server/`, reading/writing `data/`)
 - React Router
 - Plain CSS (no UI framework)
 
@@ -35,46 +40,49 @@ npm install
 npm run dev
 ```
 
-This starts a local dev server (Vite will print the URL, typically
-`http://localhost:5173`).
+`npm run dev` starts both the Vite dev server (`http://localhost:5173`) and
+the local API server (`http://localhost:4001`) together — you need both
+running for the app to work. If the dashboard shows a "couldn't reach the
+local server" message, the API half isn't up.
 
 Other scripts:
 
 ```bash
-npm run build     # production build to dist/
+npm run build     # production build of the frontend to dist/
 npm run preview   # preview the production build locally
+npm run server    # run just the API server on its own
 ```
 
 ## Project structure
 
 ```
+server/          Express API — reads/writes data/, serves pasted images
+data/             one folder per subject: subject.json + an assets/ folder
+                  (gitignored — this is your personal notes, not source)
 src/
-  components/   UI building blocks (dashboard, ledger view, section blocks)
-  data/         localStorage persistence and ledger data helpers
-  styles/       theme variables and global styles
+  components/     edit-mode UI (dashboard, subject/chapter/section editing,
+                   revision mode)
+  components/view/  read-only view-mode rendering
+  data/           API client + pure data-tree helpers (src/data/tree.js)
+  styles/         theme variables and global styles
   App.jsx
   main.jsx
 ```
 
 ## Status
 
-All ten planned features are built:
+Two generations of features are built. The original browser-only plan (data
+layer, dashboard, section content blocks, flashcards, reviewed/progress,
+revision mode, search, duplicate/delete, export/import, theme+shortcuts+
+mobile polish) is done and was then rebuilt on a local backend:
 
-- Data layer — localStorage persistence and CRUD helpers for ledgers,
-  sections, and content blocks (`src/data/`)
-- Dashboard — ledger cards with progress bars, create-ledger form, search
-- Ledger view — add, rename, delete, and reorder sections within a ledger
-- Section content blocks — paragraphs, definition rows, note/flag/task
-  callouts, and reference blocks with a copy button, all addable, editable,
-  reorderable, and deletable within a section
-- Flashcards — question/answer pairs as a block, answer hidden behind a
-  per-card reveal toggle
-- Reviewed checkbox per section, rolling up into a progress bar on both the
-  ledger view and the dashboard cards
-- Revision mode — a dedicated quiz flow that shuffles a ledger's (or one
-  section's) flashcards and tracks a right/wrong tally
-- Search across ledger titles, descriptions, and section titles; duplicate
-  or delete a ledger from the dashboard
-- Export all ledgers to a JSON file, and import one back in
-- A light/dark/auto theme toggle, `n` / `/` keyboard shortcuts on the
-  dashboard, and a mobile layout pass
+- Local backend + async data layer — Express server, file-backed `data/`
+  folder per subject
+- Chapter hierarchy — Subject → Chapter → Section → Block
+- View / edit route split — `/subject/:id` for reading, `/subject/:id/edit`
+  for authoring
+- Image blocks — paste or file-picker upload, saved as real files
+- Link blocks — YouTube URLs auto-detected and shown as a thumbnail
+
+See `plan-stack-faq.md` (local-only, not committed) for the full history and
+data model.

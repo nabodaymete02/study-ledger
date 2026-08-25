@@ -59,13 +59,22 @@
   text-align: center;
 }
 
+.dashboard-error {
+  color: var(--flag);
+  background: var(--flag-soft);
+  border: 1px solid var(--flag);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-top: 24px;
+}
+
 @media (max-width: 640px) {
   .dashboard {
     padding: 40px 16px 72px;
   }
 }
 
-.ledger-grid {
+.subject-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 20px;

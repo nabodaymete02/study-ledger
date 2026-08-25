@@ -4,6 +4,7 @@ dist-ssr
 *.local
 
 plan-stack-faq.md
+data/
 
 .vscode/*
 !.vscode/extensions.json

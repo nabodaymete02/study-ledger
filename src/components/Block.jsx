@@ -3,6 +3,8 @@ import DefinitionsBlock from './blocks/DefinitionsBlock.jsx'
 import CalloutBlock from './blocks/CalloutBlock.jsx'
 import ReferenceBlock from './blocks/ReferenceBlock.jsx'
 import FlashcardsBlock from './blocks/FlashcardsBlock.jsx'
+import ImageBlock from './blocks/ImageBlock.jsx'
+import LinkBlock from './blocks/LinkBlock.jsx'
 import './blocks/Blocks.css'
 import './Block.css'
 
@@ -12,9 +14,21 @@ const BLOCK_COMPONENTS = {
   callout: CalloutBlock,
   reference: ReferenceBlock,
   flashcards: FlashcardsBlock,
+  image: ImageBlock,
+  link: LinkBlock,
 }
 
-export default function Block({ block, isFirst, isLast, onChange, onDelete, onMoveUp, onMoveDown, autoFocus }) {
+export default function Block({
+  block,
+  isFirst,
+  isLast,
+  onChange,
+  onDelete,
+  onMoveUp,
+  onMoveDown,
+  autoFocus,
+  subjectId,
+}) {
   const Content = BLOCK_COMPONENTS[block.type]
   if (!Content) return null
 
@@ -52,7 +66,7 @@ export default function Block({ block, isFirst, isLast, onChange, onDelete, onMo
         </button>
       </div>
       <div className="block-content">
-        <Content block={block} onChange={onChange} autoFocus={autoFocus} />
+        <Content block={block} onChange={onChange} autoFocus={autoFocus} subjectId={subjectId} />
       </div>
     </div>
   )

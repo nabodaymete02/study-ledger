@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import './NewLedgerForm.css'
+import './NewSubjectForm.css'
 
-export default function NewLedgerForm({ onCreate, onCancel }) {
+export default function NewSubjectForm({ onCreate, onCancel }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
 
@@ -13,10 +13,10 @@ export default function NewLedgerForm({ onCreate, onCancel }) {
   }
 
   return (
-    <form className="new-ledger-form" onSubmit={handleSubmit}>
+    <form className="new-subject-form" onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Ledger title"
+        placeholder="Subject title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         autoFocus
@@ -27,7 +27,7 @@ export default function NewLedgerForm({ onCreate, onCancel }) {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <div className="new-ledger-form-actions">
+      <div className="new-subject-form-actions">
         <button type="submit" className="btn-accent" disabled={!title.trim()}>
           Create
         </button>

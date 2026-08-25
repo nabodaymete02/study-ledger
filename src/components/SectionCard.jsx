@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import Block from './Block.jsx'
 import AddBlockToolbar from './AddBlockToolbar.jsx'
 import './SectionCard.css'
@@ -17,8 +16,7 @@ export default function SectionCard({
   onUpdateBlock,
   onDeleteBlock,
   onMoveBlock,
-  onToggleReviewed,
-  revisionHref,
+  subjectId,
 }) {
   const [isEditingTitle, setIsEditingTitle] = useState(false)
   const [title, setTitle] = useState(section.title)
@@ -121,26 +119,11 @@ export default function SectionCard({
               onDelete={() => onDeleteBlock(block.id)}
               onMoveUp={() => onMoveBlock(block.id, -1)}
               onMoveDown={() => onMoveBlock(block.id, 1)}
+              subjectId={subjectId}
             />
           ))}
         </div>
       )}
-
-      <div className="section-card-footer">
-        <label className="reviewed-check">
-          <input type="checkbox" checked={section.reviewed} onChange={onToggleReviewed} />
-          <span className="reviewed-box" />
-          <span className="reviewed-label">
-            {section.reviewed ? 'Reviewed' : 'Mark reviewed'}
-          </span>
-        </label>
-
-        {revisionHref && (
-          <Link to={revisionHref} className="btn-ghost section-card-revise">
-            Revise this section
-          </Link>
-        )}
-      </div>
 
       <AddBlockToolbar onAdd={handleAddBlock} />
     </li>

@@ -1,4 +1,4 @@
-.new-ledger-form {
+.new-subject-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -9,7 +9,7 @@
   border-radius: 10px;
 }
 
-.new-ledger-form input {
+.new-subject-form input {
   padding: 10px 12px;
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -19,12 +19,12 @@
   font-size: 0.95rem;
 }
 
-.new-ledger-form input:focus {
+.new-subject-form input:focus {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
-.new-ledger-form-actions {
+.new-subject-form-actions {
   display: flex;
   gap: 10px;
   margin-top: 4px;

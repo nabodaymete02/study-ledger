@@ -1,10 +1,10 @@
-.add-section-form {
+.inline-add-form {
   display: flex;
   gap: 10px;
   margin-bottom: 24px;
 }
 
-.add-section-form input {
+.inline-add-form input {
   flex: 1;
   padding: 10px 12px;
   border: 1px solid var(--line);
@@ -15,12 +15,12 @@
   font-size: 0.95rem;
 }
 
-.add-section-form input:focus {
+.inline-add-form input:focus {
   outline: 2px solid var(--accent);
   outline-offset: 1px;
 }
 
-.add-section-form-actions {
+.inline-add-form-actions {
   display: flex;
   gap: 10px;
 }

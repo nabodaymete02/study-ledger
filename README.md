@@ -58,5 +58,9 @@ src/
 
 ## Status
 
-Early days — the dashboard and ledger views are being built out
-feature by feature.
+Building feature by feature. Done so far:
+
+- Data layer — localStorage persistence and CRUD helpers for ledgers,
+  sections, and content blocks (`src/data/`)
+
+Next up: dashboard shell and routing, then the ledger view.

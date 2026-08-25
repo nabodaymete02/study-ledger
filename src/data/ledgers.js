@@ -1,5 +1,6 @@
 import { loadLedgers, saveLedgers } from './storage.js'
 import { generateId } from './id.js'
+import { regenerateBlockIds } from './blocks.js'
 
 export function getLedgers() {
   return loadLedgers()
@@ -37,6 +38,29 @@ export function updateLedger(ledgerId, patch) {
 export function deleteLedger(ledgerId) {
   const ledgers = loadLedgers()
   saveLedgers(ledgers.filter((ledger) => ledger.id !== ledgerId))
+}
+
+export function duplicateLedger(ledgerId) {
+  const original = getLedger(ledgerId)
+  if (!original) return null
+
+  const now = new Date().toISOString()
+  const copy = {
+    id: generateId(),
+    title: `${original.title} (copy)`,
+    description: original.description,
+    createdAt: now,
+    updatedAt: now,
+    sections: original.sections.map((section) => ({
+      id: generateId(),
+      title: section.title,
+      reviewed: false,
+      blocks: section.blocks.map(regenerateBlockIds),
+    })),
+  }
+
+  saveLedgers([...loadLedgers(), copy])
+  return copy
 }
 
 export function getLedgerProgress(ledger) {

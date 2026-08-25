@@ -1,0 +1,14 @@
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.block-content {
+  min-width: 0;
+}
+
+.block-actions {
+  display: flex;
+  gap: 4px;
+}

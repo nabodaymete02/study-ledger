@@ -50,3 +50,17 @@ export function reorderBlocks(ledgerId, sectionId, orderedBlockIds) {
     }),
   )
 }
+
+// Deep-copies a block with fresh ids — used when duplicating or importing a
+// ledger, so the copy shares no ids with the original (definitions/flashcards
+// carry ids on their nested items too).
+export function regenerateBlockIds(block) {
+  const copy = { ...block, id: generateId() }
+  if (block.type === 'definitions') {
+    copy.items = (block.items ?? []).map((item) => ({ ...item }))
+  }
+  if (block.type === 'flashcards') {
+    copy.cards = (block.cards ?? []).map((card) => ({ ...card, id: generateId() }))
+  }
+  return copy
+}

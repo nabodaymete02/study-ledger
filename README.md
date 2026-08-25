@@ -58,9 +58,23 @@ src/
 
 ## Status
 
-Building feature by feature. Done so far:
+All ten planned features are built:
 
 - Data layer — localStorage persistence and CRUD helpers for ledgers,
   sections, and content blocks (`src/data/`)
-
-Next up: dashboard shell and routing, then the ledger view.
+- Dashboard — ledger cards with progress bars, create-ledger form, search
+- Ledger view — add, rename, delete, and reorder sections within a ledger
+- Section content blocks — paragraphs, definition rows, note/flag/task
+  callouts, and reference blocks with a copy button, all addable, editable,
+  reorderable, and deletable within a section
+- Flashcards — question/answer pairs as a block, answer hidden behind a
+  per-card reveal toggle
+- Reviewed checkbox per section, rolling up into a progress bar on both the
+  ledger view and the dashboard cards
+- Revision mode — a dedicated quiz flow that shuffles a ledger's (or one
+  section's) flashcards and tracks a right/wrong tally
+- Search across ledger titles, descriptions, and section titles; duplicate
+  or delete a ledger from the dashboard
+- Export all ledgers to a JSON file, and import one back in
+- A light/dark/auto theme toggle, `n` / `/` keyboard shortcuts on the
+  dashboard, and a mobile layout pass

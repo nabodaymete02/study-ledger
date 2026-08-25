@@ -1,0 +1,26 @@
+.add-section-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.add-section-form input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface2);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.95rem;
+}
+
+.add-section-form input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.add-section-form-actions {
+  display: flex;
+  gap: 10px;
+}

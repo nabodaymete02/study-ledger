@@ -55,12 +55,14 @@ button {
 }
 
 .btn-accent {
+  display: inline-block;
   background: var(--accent);
   color: var(--accent-ink);
   border: none;
   border-radius: 6px;
   padding: 8px 16px;
   font-weight: 600;
+  text-decoration: none;
   cursor: pointer;
   transition: opacity 0.15s ease;
 }
@@ -75,11 +77,13 @@ button {
 }
 
 .btn-ghost {
+  display: inline-block;
   background: transparent;
   color: var(--muted);
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 8px 16px;
+  text-decoration: none;
   cursor: pointer;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
@@ -87,4 +91,30 @@ button {
 .btn-ghost:hover {
   color: var(--ink);
   border-color: var(--muted);
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.icon-btn:hover:not(:disabled) {
+  color: var(--ink);
+  border-color: var(--muted);
+}
+
+.icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }

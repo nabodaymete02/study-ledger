@@ -6,8 +6,6 @@
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 10px;
-  text-decoration: none;
-  color: inherit;
   box-shadow: 0 1px 3px var(--shadow);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
@@ -15,6 +13,14 @@
 .ledger-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px var(--shadow);
+}
+
+.ledger-card-link {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
 }
 
 .ledger-card h2 {
@@ -32,4 +38,15 @@
 .ledger-card-meta {
   font-size: 0.8rem;
   color: var(--muted);
+}
+
+.ledger-card-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.ledger-card-action {
+  padding: 4px 10px;
+  font-size: 0.78rem;
 }

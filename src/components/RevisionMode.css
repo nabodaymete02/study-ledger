@@ -1,0 +1,79 @@
+.revision-mode {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+}
+
+.revision-progress {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 24px 0 16px;
+}
+
+.revision-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 28px 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.revision-question {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.revision-answer {
+  margin: 0;
+  padding: 14px 16px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  border-radius: 8px;
+  font-size: 1.05rem;
+}
+
+.revision-grade-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.revision-grade-wrong {
+  border-color: var(--flag);
+  color: var(--flag);
+}
+
+.revision-score {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  margin: 24px 0;
+}
+
+.revision-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.revision-empty {
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 24px;
+}
+
+@media (max-width: 640px) {
+  .revision-mode {
+    padding: 40px 16px 72px;
+  }
+
+  .revision-card {
+    padding: 20px 16px;
+  }
+
+  .revision-question {
+    font-size: 1.2rem;
+  }
+}

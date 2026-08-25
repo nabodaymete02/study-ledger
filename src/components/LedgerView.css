@@ -28,4 +28,64 @@
 .ledger-view-placeholder {
   color: var(--muted);
   font-style: italic;
+  margin: 0 0 24px;
+}
+
+.section-list {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ledger-tracker {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  margin-bottom: 24px;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+.ledger-tracker-count {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.ledger-tracker-count b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.ledger-tracker .progress-bar {
+  flex: 1;
+}
+
+.ledger-tracker-revise {
+  padding: 5px 12px;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .ledger-view {
+    padding: 40px 16px 72px;
+  }
+
+  .ledger-tracker {
+    flex-wrap: wrap;
+  }
+
+  .ledger-tracker .progress-bar {
+    order: 3;
+    flex: 1 1 100%;
+  }
 }

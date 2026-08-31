@@ -1,0 +1,90 @@
+.tracker-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+}
+
+.tracker-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.tracker-header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.tracker-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    'timer habits'
+    'dates bucket'
+    'longterm longterm';
+  gap: 20px;
+  align-items: start;
+}
+
+.tracker-grid > .focus-timer {
+  grid-area: timer;
+}
+.tracker-grid > .habit-tracker {
+  grid-area: habits;
+}
+.tracker-grid > .important-dates {
+  grid-area: dates;
+}
+.tracker-grid > .daily-bucket {
+  grid-area: bucket;
+}
+.tracker-grid > .long-term-tasks {
+  grid-area: longterm;
+}
+
+@media (max-width: 760px) {
+  .tracker-page {
+    padding: 40px 16px 72px;
+  }
+  .tracker-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'timer'
+      'habits'
+      'bucket'
+      'dates'
+      'longterm';
+  }
+}
+
+.tracker-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 1px 3px var(--shadow);
+}
+
+.tracker-card h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.tracker-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tracker-empty {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 4px 0;
+}

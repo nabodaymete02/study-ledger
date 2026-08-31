@@ -79,3 +79,23 @@ export async function ensureAssetsDir(dirName) {
   await fs.mkdir(dir, { recursive: true })
   return dir
 }
+
+// ---- Tracker (habits, timers, todos, dates, long-term list) ----
+// Lives as a single file directly under data/, not inside a subject folder.
+
+const TRACKER_FILE = path.join(DATA_DIR, 'tracker.json')
+
+export async function readTracker() {
+  await ensureDataDir()
+  try {
+    const raw = await fs.readFile(TRACKER_FILE, 'utf-8')
+    return JSON.parse(raw)
+  } catch {
+    return null
+  }
+}
+
+export async function writeTracker(tracker) {
+  await ensureDataDir()
+  await fs.writeFile(TRACKER_FILE, JSON.stringify(tracker, null, 2), 'utf-8')
+}

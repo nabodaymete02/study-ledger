@@ -1,0 +1,125 @@
+.longterm-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.longterm-add-form input,
+.longterm-add-form textarea {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface2);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  resize: vertical;
+}
+
+.longterm-add-form input:focus,
+.longterm-add-form textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.longterm-add-row {
+  display: flex;
+  gap: 8px;
+}
+
+.longterm-add-row input[type='text'] {
+  flex: 1;
+}
+
+.longterm-add-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.longterm-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.longterm-group h3 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  font-family: var(--sans);
+  color: var(--accent-ink);
+}
+
+.longterm-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.longterm-item {
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.longterm-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.longterm-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.longterm-check input {
+  margin-top: 3px;
+  accent-color: var(--accent);
+}
+
+.longterm-text {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.longterm-item.is-done .longterm-text {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.longterm-meta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.longterm-deadline {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+
+.longterm-deadline.is-past {
+  color: var(--flag);
+  background: var(--flag-soft);
+}
+
+.longterm-delete {
+  width: 20px;
+  height: 20px;
+  font-size: 0.8rem;
+}
+
+.longterm-notes {
+  margin: 4px 0 0 24px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}

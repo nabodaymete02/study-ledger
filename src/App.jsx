@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import TrackerHome from './components/tracker/TrackerHome.jsx'
 import Dashboard from './components/Dashboard.jsx'
 import SubjectView from './components/view/SubjectView.jsx'
 import SubjectEdit from './components/SubjectEdit.jsx'
@@ -10,7 +11,8 @@ export default function App() {
     <BrowserRouter>
       <ThemeToggle />
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<TrackerHome />} />
+        <Route path="/subjects" element={<Dashboard />} />
         <Route path="/subject/:subjectId" element={<SubjectView />} />
         <Route path="/subject/:subjectId/edit" element={<SubjectEdit />} />
         <Route path="/subject/:subjectId/revise" element={<RevisionMode />} />

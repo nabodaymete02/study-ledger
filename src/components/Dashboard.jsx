@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import SubjectCard from './SubjectCard.jsx'
 import NewSubjectForm from './NewSubjectForm.jsx'
 import {
@@ -129,6 +129,9 @@ export default function Dashboard() {
       <header className="dashboard-header">
         <h1>Study Ledger</h1>
         <div className="dashboard-header-actions">
+          <Link to="/" className="btn-ghost">
+            ← Tracker
+          </Link>
           <button
             type="button"
             className="btn-ghost"

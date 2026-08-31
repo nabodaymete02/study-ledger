@@ -42,7 +42,7 @@ export default function SubjectEdit() {
   if (loadError) {
     return (
       <main className="subject-edit">
-        <Link to="/" className="back-link">
+        <Link to="/subjects" className="back-link">
           &larr; Dashboard
         </Link>
         <p className="subject-edit-error">Couldn&rsquo;t load this subject ({loadError}).</p>
@@ -140,7 +140,7 @@ export default function SubjectEdit() {
   return (
     <main className="subject-edit">
       <div className="subject-edit-topbar">
-        <Link to="/" className="back-link">
+        <Link to="/subjects" className="back-link">
           &larr; Dashboard
         </Link>
         <Link to={`/subject/${subject.id}`} className="btn-ghost">

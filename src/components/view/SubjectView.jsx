@@ -30,7 +30,7 @@ export default function SubjectView() {
   if (loadError) {
     return (
       <main className="subject-view">
-        <Link to="/" className="back-link">
+        <Link to="/subjects" className="back-link">
           &larr; Dashboard
         </Link>
         <p className="subject-view-error">Couldn&rsquo;t load this subject ({loadError}).</p>
@@ -51,7 +51,7 @@ export default function SubjectView() {
   return (
     <main className="subject-view">
       <header className="subject-view-masthead">
-        <Link to="/" className="back-link">
+        <Link to="/subjects" className="back-link">
           &larr; Dashboard
         </Link>
         <h1>{subject.title}</h1>

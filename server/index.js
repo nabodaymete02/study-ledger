@@ -11,6 +11,8 @@ import {
   createSubjectDir,
   deleteSubjectDir,
   ensureAssetsDir,
+  readTracker,
+  writeTracker,
 } from './store.js'
 
 const PORT = process.env.PORT || 4001
@@ -65,6 +67,15 @@ app.delete('/api/subjects/:id', async (req, res) => {
   if (!dirName) return res.status(404).json({ error: 'Subject not found' })
   await deleteSubjectDir(dirName)
   res.status(204).end()
+})
+
+app.get('/api/tracker', async (req, res) => {
+  res.json(await readTracker())
+})
+
+app.put('/api/tracker', async (req, res) => {
+  await writeTracker(req.body)
+  res.json(req.body)
 })
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024 } })

@@ -1,0 +1,146 @@
+.bucket-add-form {
+  display: flex;
+  gap: 8px;
+}
+
+.bucket-add-form input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface2);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+}
+
+.bucket-add-form input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.bucket-stack {
+  position: relative;
+  min-height: 150px;
+  padding-top: 8px;
+}
+
+.bucket-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  margin: 0;
+}
+
+.bucket-card {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: min(300px, 88%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px var(--shadow);
+  font-size: 0.92rem;
+  text-align: left;
+  cursor: grab;
+  transform: translateX(-50%) translateY(calc(var(--depth) * 7px)) rotate(var(--rot));
+  transition: transform 0.22s ease, opacity 0.22s ease, box-shadow 0.15s ease;
+}
+
+.bucket-card:hover {
+  box-shadow: 0 4px 10px var(--shadow);
+}
+
+.bucket-card:active {
+  cursor: grabbing;
+}
+
+.bucket-card.is-popping {
+  transform: translateX(-50%) translateY(-64px) rotate(calc(var(--rot) * 3)) scale(0.88);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bucket-card-text {
+  flex: 1;
+  word-break: break-word;
+}
+
+.bucket-card-remove {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--accent-ink);
+  opacity: 0.55;
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.bucket-card-remove:hover {
+  opacity: 1;
+}
+
+.bucket-drop-zone {
+  margin-top: 14px;
+  padding: 10px;
+  text-align: center;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.bucket-drop-zone.is-over {
+  border-color: var(--good);
+  color: var(--good);
+  background: var(--good-soft);
+}
+
+.bucket-done {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.bucket-done h3 {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-family: var(--sans);
+}
+
+.bucket-done-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bucket-done-list li {
+  font-size: 0.86rem;
+  color: var(--muted);
+  text-decoration: line-through;
+}

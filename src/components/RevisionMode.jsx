@@ -58,7 +58,7 @@ export default function RevisionMode() {
   if (loadError) {
     return (
       <main className="revision-mode">
-        <Link to="/" className="back-link">
+        <Link to="/subjects" className="back-link">
           &larr; Dashboard
         </Link>
         <p className="revision-empty">Couldn&rsquo;t load this subject ({loadError}).</p>

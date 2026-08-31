@@ -1,0 +1,73 @@
+.date-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.date-add-form input {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface2);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+}
+
+.date-add-form input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.date-add-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.date-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.date-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.date-badge {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 9px;
+  min-width: 52px;
+  text-align: center;
+}
+
+.date-row.is-soon .date-badge {
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.date-row.is-past .date-badge {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.date-label {
+  flex: 1;
+  font-size: 0.92rem;
+}
+
+.date-row.is-past .date-label {
+  color: var(--muted);
+}

@@ -53,6 +53,7 @@ export {
   popTodo,
   deleteTodo,
   pruneDoneToday,
+  clearDoneToday,
   addLongTermTask,
   toggleLongTermTask,
   deleteLongTermTask,

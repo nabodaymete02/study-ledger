@@ -1,0 +1,9 @@
+.linkify-url {
+  color: var(--accent-ink);
+  text-decoration: underline;
+  word-break: break-word;
+}
+
+.linkify-url:hover {
+  color: var(--accent);
+}

@@ -1,0 +1,38 @@
+.datetime-display {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 100;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface2);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+}
+
+.datetime-display-date {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.datetime-display-time {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .datetime-display {
+    top: 10px;
+    left: 10px;
+    padding: 5px 10px;
+  }
+
+  .datetime-display-date {
+    display: none;
+  }
+}

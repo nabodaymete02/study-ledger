@@ -5,10 +5,12 @@ import SubjectView from './components/view/SubjectView.jsx'
 import SubjectEdit from './components/SubjectEdit.jsx'
 import RevisionMode from './components/RevisionMode.jsx'
 import ThemeToggle from './components/ThemeToggle.jsx'
+import DateTimeDisplay from './components/DateTimeDisplay.jsx'
 
 export default function App() {
   return (
     <BrowserRouter>
+      <DateTimeDisplay />
       <ThemeToggle />
       <Routes>
         <Route path="/" element={<TrackerHome />} />

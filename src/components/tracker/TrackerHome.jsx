@@ -13,6 +13,7 @@ import {
   addTodo,
   popTodo,
   deleteTodo,
+  clearDoneToday,
   addLongTermTask,
   toggleLongTermTask,
   deleteLongTermTask,
@@ -100,6 +101,7 @@ export default function TrackerHome() {
           onAdd={(text) => update((t) => addTodo(t, text))}
           onPop={(id) => update((t) => popTodo(t, id))}
           onRemove={(id) => update((t) => deleteTodo(t, id))}
+          onClearDone={() => update((t) => clearDoneToday(t))}
         />
 
         <LongTermTasks

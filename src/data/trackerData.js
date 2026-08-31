@@ -133,12 +133,17 @@ export function deleteTodo(tracker, id) {
   return { ...tracker, todos: { ...tracker.todos, stack: tracker.todos.stack.filter((t) => t.id !== id) } }
 }
 
+
 // The "done today" strip resets each day — anything not from today is dropped.
 export function pruneDoneToday(tracker) {
   const today = todayKey()
   const done = tracker.todos.done.filter((t) => todayKey(new Date(t.doneAt)) === today)
   if (done.length === tracker.todos.done.length) return tracker
   return { ...tracker, todos: { ...tracker.todos, done } }
+}
+
+export function clearDoneToday(tracker) {
+  return { ...tracker, todos: { ...tracker.todos, done: [] } }
 }
 
 // ---- Long-term task list (reading / studying to get to, with a deadline) ----

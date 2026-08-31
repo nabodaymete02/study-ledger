@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { groupLongTermTasks, formatDDay, daysUntil } from '../../data/index.js'
+import Linkify from '../Linkify.jsx'
 import './LongTermTasks.css'
 
 export default function LongTermTasks({ tasks, onAdd, onToggle, onDelete }) {
@@ -96,7 +97,9 @@ export default function LongTermTasks({ tasks, onAdd, onToggle, onDelete }) {
                   <li key={task.id} className={`longterm-item${task.done ? ' is-done' : ''}`}>
                     <label className="longterm-check">
                       <input type="checkbox" checked={task.done} onChange={() => onToggle(task.id)} />
-                      <span className="longterm-text">{task.text}</span>
+                      <span className="longterm-text">
+                        <Linkify text={task.text} />
+                      </span>
                     </label>
                     <div className="longterm-meta">
                       {task.deadline && !task.done && (
@@ -115,7 +118,11 @@ export default function LongTermTasks({ tasks, onAdd, onToggle, onDelete }) {
                         ×
                       </button>
                     </div>
-                    {task.notes && <p className="longterm-notes">{task.notes}</p>}
+                    {task.notes && (
+                      <p className="longterm-notes">
+                        <Linkify text={task.notes} />
+                      </p>
+                    )}
                   </li>
                 ))}
               </ul>

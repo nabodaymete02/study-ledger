@@ -1,13 +1,12 @@
 import { useState } from 'react'
+import Linkify from '../Linkify.jsx'
 import './DailyBucket.css'
 
-// Deterministic small stagger so the pile looks hand-tossed but never jitters
-// on re-render.
-function cardRotation(i) {
-  return ((i * 47) % 11) - 5
-}
+// How many cards deep the stack keeps offsetting before later ones just
+// pile up at the same depth — keeps a long bucket from growing forever tall.
+const MAX_STACK_DEPTH = 6
 
-export default function DailyBucket({ todos, onAdd, onPop, onRemove }) {
+export default function DailyBucket({ todos, onAdd, onPop, onRemove, onClearDone }) {
   const [text, setText] = useState('')
   const [poppingId, setPoppingId] = useState(null)
   const [dragOver, setDragOver] = useState(false)
@@ -61,41 +60,42 @@ export default function DailyBucket({ todos, onAdd, onPop, onRemove }) {
         {stack.length === 0 ? (
           <p className="tracker-empty bucket-empty">Bucket&rsquo;s empty — add a task above.</p>
         ) : (
-          stack.map((task, i) => (
-            <div
-              key={task.id}
-              className={`bucket-card${task.id === poppingId ? ' is-popping' : ''}`}
-              style={{ '--rot': `${cardRotation(i)}deg`, '--depth': Math.min(i, 10), zIndex: i }}
-              draggable
-              role="button"
-              tabIndex={0}
-              onDragStart={(e) => {
-                e.dataTransfer.setData('text/plain', task.id)
-                e.dataTransfer.effectAllowed = 'move'
-              }}
-              onClick={() => triggerPop(task.id)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault()
-                  triggerPop(task.id)
+          stack.map((task, i) => {
+            const isTop = i === stack.length - 1
+            const depth = Math.min(stack.length - 1 - i, MAX_STACK_DEPTH)
+            return (
+              <div
+                key={task.id}
+                className={`bucket-card${isTop ? ' is-top' : ''}${task.id === poppingId ? ' is-popping' : ''}`}
+                style={{ '--depth': depth, zIndex: i }}
+                draggable={isTop}
+                onDragStart={
+                  isTop
+                    ? (e) => {
+                        e.dataTransfer.setData('text/plain', task.id)
+                        e.dataTransfer.effectAllowed = 'move'
+                      }
+                    : undefined
                 }
-              }}
-              title="Click, or drag down to the tray, when it's done"
-            >
-              <span className="bucket-card-text">{task.text}</span>
-              <button
-                type="button"
-                className="bucket-card-remove"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onRemove(task.id)
-                }}
-                title="Remove (didn't mean to add this)"
+                title={isTop ? 'Drag down to the tray when it’s done' : 'Finish the task on top first'}
               >
-                ×
-              </button>
-            </div>
-          ))
+                <span className="bucket-card-text">
+                  <Linkify text={task.text} />
+                </span>
+                <button
+                  type="button"
+                  className="bucket-card-remove"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onRemove(task.id)
+                  }}
+                  title="Remove (didn't mean to add this)"
+                >
+                  ×
+                </button>
+              </div>
+            )
+          })
         )}
       </div>
 
@@ -115,13 +115,28 @@ export default function DailyBucket({ todos, onAdd, onPop, onRemove }) {
 
       {doneToday.length > 0 && (
         <div className="bucket-done">
-          <h3>Done today</h3>
+          <div className="bucket-done-header">
+            <h3>Done today</h3>
+            <button
+              type="button"
+              className="btn-ghost bucket-done-clear"
+              onClick={() => {
+                if (window.confirm('Clear the done-today list? This can\'t be undone.')) {
+                  onClearDone()
+                }
+              }}
+            >
+              Clear
+            </button>
+          </div>
           <ul className="bucket-done-list">
             {doneToday
               .slice()
               .reverse()
               .map((task) => (
-                <li key={task.id}>{task.text}</li>
+                <li key={task.id}>
+                  <Linkify text={task.text} />
+                </li>
               ))}
           </ul>
         </div>

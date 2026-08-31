@@ -1,9 +1,27 @@
 # Study Ledger
 
-A note-taking app built around a simple idea: notes you write once and never
+A local, single-user productivity app with two halves: a **Tracker** home
+page for daily habits, focus sessions, and todos, and **Study Ledger**, a
+note-taking app built around a simple idea — notes you write once and never
 reopen aren't worth much. Study Ledger organizes material into subjects,
 chapters, and short, numbered sections you can check off, quiz yourself on,
 and scan back through later, instead of one long page of prose.
+
+## Tracker
+
+The landing page (`/`). Five independent cards, each backed by the same
+local `data/tracker.json` file:
+
+- a **focus timer** with quick presets (25/45/60/90 min), a label, and a
+  study/work/other kind — finished sessions are logged and totaled per day
+- **habit tracking** with a 7-day grid per habit and a streak counter
+- **important dates** shown as a sorted D-day countdown list
+- **today's bucket**, a drag-or-click todo pile for same-day tasks, with a
+  "done today" strip that clears itself each morning
+- a **reading / long-term task list**, grouped by subject, each task with
+  an optional deadline
+
+## Study Ledger
 
 Each topic gets its own **subject**. A subject is organized into
 **chapters**, each chapter into **sections**, and each section can mix a few
@@ -25,6 +43,16 @@ Every subject has two views: a clean **read-only view** for actually
 studying from, and a separate **edit** mode for authoring. Data is stored
 locally as real files under `data/`, organized subject-by-subject — no
 account, no cloud, no external server.
+
+## Routes
+
+| Path | Page |
+| ---- | ---- |
+| `/` | Tracker home |
+| `/subjects` | Study Ledger dashboard |
+| `/subject/:id` | Subject view (read-only) |
+| `/subject/:id/edit` | Subject edit (authoring) |
+| `/subject/:id/revise` (and `/revise/:sectionId`) | Flashcard revision mode |
 
 ## Stack
 
@@ -57,13 +85,16 @@ npm run server    # run just the API server on its own
 
 ```
 server/          Express API — reads/writes data/, serves pasted images
-data/             one folder per subject: subject.json + an assets/ folder
-                  (gitignored — this is your personal notes, not source)
+data/             tracker.json, plus one folder per subject: subject.json
+                  and an assets/ folder (gitignored — personal data, not source)
 src/
+  components/tracker/  Tracker home page (focus timer, habits, dates,
+                   daily bucket, long-term tasks)
   components/     edit-mode UI (dashboard, subject/chapter/section editing,
                    revision mode)
   components/view/  read-only view-mode rendering
-  data/           API client + pure data-tree helpers (src/data/tree.js)
+  data/           API client + pure data-tree helpers (src/data/tree.js,
+                   src/data/trackerData.js)
   styles/         theme variables and global styles
   App.jsx
   main.jsx
@@ -71,10 +102,11 @@ src/
 
 ## Status
 
-Two generations of features are built. The original browser-only plan (data
-layer, dashboard, section content blocks, flashcards, reviewed/progress,
-revision mode, search, duplicate/delete, export/import, theme+shortcuts+
-mobile polish) is done and was then rebuilt on a local backend:
+Three generations of features are built. The original browser-only plan
+(data layer, dashboard, section content blocks, flashcards,
+reviewed/progress, revision mode, search, duplicate/delete, export/import,
+theme+shortcuts+mobile polish) is done and was then rebuilt on a local
+backend:
 
 - Local backend + async data layer — Express server, file-backed `data/`
   folder per subject
@@ -84,5 +116,7 @@ mobile polish) is done and was then rebuilt on a local backend:
 - Image blocks — paste or file-picker upload, saved as real files
 - Link blocks — YouTube URLs auto-detected and shown as a thumbnail
 
-See `plan-stack-faq.md` (local-only, not committed) for the full history and
-data model.
+Most recently, a **Tracker** home page was added at `/`, backed by its own
+`data/tracker.json` document and the same save-on-every-change pattern as
+Study Ledger: focus timer with per-day totals, habit streaks, important
+dates, a same-day todo bucket, and a subject-grouped long-term task list.

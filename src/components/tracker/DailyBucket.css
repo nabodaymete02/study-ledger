@@ -7,7 +7,7 @@
   flex: 1;
   padding: 8px 12px;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 2px;
   background: var(--surface2);
   color: var(--ink);
   font-family: var(--sans);
@@ -33,7 +33,7 @@
   justify-content: center;
   text-align: center;
   border: 1px dashed var(--line);
-  border-radius: 10px;
+  border-radius: 2px;
   margin: 0;
 }
 
@@ -49,12 +49,13 @@
   background: var(--accent-soft);
   color: var(--accent-ink);
   border: 1px solid var(--accent);
-  border-radius: 8px;
+  border-radius: 2px;
   box-shadow: 0 1px 3px var(--shadow);
   font-size: 0.92rem;
   text-align: left;
   cursor: default;
   filter: brightness(0.95);
+  z-index: var(--z);
   transform: translateX(-50%) translateY(calc(var(--depth) * 14px));
   transition: transform 0.22s ease, opacity 0.22s ease, box-shadow 0.15s ease, filter 0.15s ease;
 }
@@ -63,6 +64,15 @@
   cursor: grab;
   filter: none;
   box-shadow: 0 3px 8px var(--shadow);
+}
+
+/* Buried cards mostly sit behind the top one — raise whichever card the
+   pointer is over so its reorder/remove controls are actually reachable. */
+.bucket-card:not(.is-top):hover,
+.bucket-card:not(.is-top):focus-within {
+  z-index: 999;
+  filter: none;
+  box-shadow: 0 4px 10px var(--shadow);
 }
 
 .bucket-card.is-top:hover {
@@ -84,6 +94,14 @@
   word-break: break-word;
 }
 
+.bucket-card-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.bucket-card-move,
 .bucket-card-remove {
   flex-shrink: 0;
   width: 20px;
@@ -100,8 +118,18 @@
   line-height: 1;
 }
 
+.bucket-card-move {
+  font-size: 0.8rem;
+}
+
+.bucket-card-move:hover:not(:disabled),
 .bucket-card-remove:hover {
   opacity: 1;
+}
+
+.bucket-card-move:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
 }
 
 .bucket-drop-zone {
@@ -109,7 +137,7 @@
   padding: 10px;
   text-align: center;
   border: 1px dashed var(--line);
-  border-radius: 8px;
+  border-radius: 2px;
   color: var(--muted);
   font-size: 0.78rem;
   text-transform: uppercase;

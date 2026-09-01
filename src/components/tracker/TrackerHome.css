@@ -1,21 +1,46 @@
 .tracker-page {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 48px 24px 96px;
+  padding: 56px 24px 96px;
 }
 
 .tracker-header {
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
+}
+
+.tracker-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin: 0 0 14px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.tracker-eyebrow span {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  padding: 3px 8px;
+  border-radius: 2px;
 }
 
 .tracker-header h1 {
   margin: 0;
-  font-size: 2rem;
+  font-family: var(--display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(32px, 6vw, 52px);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
 }
 
 .tracker-grid {
@@ -64,16 +89,21 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  padding: 20px;
+  padding: 22px 24px;
   background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  box-shadow: 0 1px 3px var(--shadow);
+  border: 1px solid var(--ink);
+  border-left: 4px solid var(--accent);
+  border-radius: 2px;
+  box-shadow: 3px 3px 0 var(--shadow);
 }
 
 .tracker-card h2 {
   margin: 0;
-  font-size: 1.1rem;
+  font-family: var(--display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
 }
 
 .tracker-card-header {
@@ -81,6 +111,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--line);
 }
 
 .tracker-empty {

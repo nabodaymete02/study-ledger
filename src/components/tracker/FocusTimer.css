@@ -20,7 +20,7 @@
   width: 100%;
   padding: 8px 12px;
   border: 1px solid var(--line);
-  border-radius: 6px;
+  border-radius: 2px;
   background: var(--surface2);
   color: var(--ink);
   font-family: var(--sans);
@@ -49,7 +49,7 @@
 .focus-timer-pill {
   padding: 4px 10px;
   border: 1px solid var(--line);
-  border-radius: 999px;
+  border-radius: 2px;
   background: transparent;
   color: var(--muted);
   font-size: 0.78rem;

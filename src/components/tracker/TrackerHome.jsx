@@ -13,6 +13,7 @@ import {
   addTodo,
   popTodo,
   deleteTodo,
+  reorderTodos,
   clearDoneToday,
   addLongTermTask,
   toggleLongTermTask,
@@ -68,10 +69,29 @@ export default function TrackerHome() {
     )
   }
 
+  // direction: +1 moves the task toward the top of the stack (done sooner),
+  // -1 moves it back down.
+  function handleMoveTodo(id, direction) {
+    const stack = tracker.todos.stack
+    const index = stack.findIndex((t) => t.id === id)
+    const targetIndex = index + direction
+    if (index === -1 || targetIndex < 0 || targetIndex >= stack.length) return
+    const ids = stack.map((t) => t.id)
+    const temp = ids[index]
+    ids[index] = ids[targetIndex]
+    ids[targetIndex] = temp
+    update((t) => reorderTodos(t, ids))
+  }
+
   return (
     <main className="tracker-page">
       <header className="tracker-header">
-        <h1>Tracker</h1>
+        <div>
+          <p className="tracker-eyebrow">
+            <span>Personal</span> Daily tracker
+          </p>
+          <h1>Tracker</h1>
+        </div>
         <Link to="/subjects" className="btn-ghost">
           Study Ledger →
         </Link>
@@ -101,6 +121,7 @@ export default function TrackerHome() {
           onAdd={(text) => update((t) => addTodo(t, text))}
           onPop={(id) => update((t) => popTodo(t, id))}
           onRemove={(id) => update((t) => deleteTodo(t, id))}
+          onMove={handleMoveTodo}
           onClearDone={() => update((t) => clearDoneToday(t))}
         />
 

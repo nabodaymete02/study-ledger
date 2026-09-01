@@ -6,7 +6,7 @@ import './DailyBucket.css'
 // pile up at the same depth — keeps a long bucket from growing forever tall.
 const MAX_STACK_DEPTH = 6
 
-export default function DailyBucket({ todos, onAdd, onPop, onRemove, onClearDone }) {
+export default function DailyBucket({ todos, onAdd, onPop, onRemove, onMove, onClearDone }) {
   const [text, setText] = useState('')
   const [poppingId, setPoppingId] = useState(null)
   const [dragOver, setDragOver] = useState(false)
@@ -67,7 +67,7 @@ export default function DailyBucket({ todos, onAdd, onPop, onRemove, onClearDone
               <div
                 key={task.id}
                 className={`bucket-card${isTop ? ' is-top' : ''}${task.id === poppingId ? ' is-popping' : ''}`}
-                style={{ '--depth': depth, zIndex: i }}
+                style={{ '--depth': depth, '--z': i }}
                 draggable={isTop}
                 onDragStart={
                   isTop
@@ -82,17 +82,45 @@ export default function DailyBucket({ todos, onAdd, onPop, onRemove, onClearDone
                 <span className="bucket-card-text">
                   <Linkify text={task.text} />
                 </span>
-                <button
-                  type="button"
-                  className="bucket-card-remove"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    onRemove(task.id)
-                  }}
-                  title="Remove (didn't mean to add this)"
-                >
-                  ×
-                </button>
+                <div className="bucket-card-controls">
+                  <button
+                    type="button"
+                    className="bucket-card-move"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onMove(task.id, 1)
+                    }}
+                    disabled={isTop}
+                    title="Move up the stack"
+                    aria-label="Move task up the stack"
+                  >
+                    &uarr;
+                  </button>
+                  <button
+                    type="button"
+                    className="bucket-card-move"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onMove(task.id, -1)
+                    }}
+                    disabled={i === 0}
+                    title="Move down the stack"
+                    aria-label="Move task down the stack"
+                  >
+                    &darr;
+                  </button>
+                  <button
+                    type="button"
+                    className="bucket-card-remove"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onRemove(task.id)
+                    }}
+                    title="Remove (didn't mean to add this)"
+                  >
+                    ×
+                  </button>
+                </div>
               </div>
             )
           })

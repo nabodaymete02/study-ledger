@@ -133,6 +133,12 @@ export function deleteTodo(tracker, id) {
   return { ...tracker, todos: { ...tracker.todos, stack: tracker.todos.stack.filter((t) => t.id !== id) } }
 }
 
+export function reorderTodos(tracker, orderedIds) {
+  const byId = new Map(tracker.todos.stack.map((t) => [t.id, t]))
+  const stack = orderedIds.map((id) => byId.get(id)).filter(Boolean)
+  return { ...tracker, todos: { ...tracker.todos, stack } }
+}
+
 
 // The "done today" strip resets each day — anything not from today is dropped.
 export function pruneDoneToday(tracker) {

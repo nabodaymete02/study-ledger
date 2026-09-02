@@ -40,8 +40,15 @@
 }
 
 .habit-streak {
+  display: flex;
+  align-items: center;
+  gap: 3px;
   font-size: 0.8rem;
   color: var(--muted);
+}
+
+.habit-streak-icon {
+  color: var(--signal);
 }
 
 .habit-delete {

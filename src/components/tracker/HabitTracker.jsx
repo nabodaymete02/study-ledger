@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { lastNDays, getHabitStreak, todayKey } from '../../data/index.js'
+import { IconFlame } from '../icons.jsx'
 import './HabitTracker.css'
 
 export default function HabitTracker({ habits, onToggleDay, onAddHabit, onDeleteHabit }) {
@@ -67,7 +68,8 @@ export default function HabitTracker({ habits, onToggleDay, onAddHabit, onDelete
                   <span className="habit-name">{habit.name}</span>
                   {streak > 0 && (
                     <span className="habit-streak" title={`${streak}-day streak`}>
-                      🔥 {streak}
+                      <IconFlame size={13} className="habit-streak-icon" />
+                      {streak}
                     </span>
                   )}
                   <button

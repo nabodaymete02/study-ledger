@@ -51,6 +51,7 @@ export function createDefaultTracker() {
     todos: { stack: [], done: [] },
     longTermTasks: [],
     sessions: [],
+    diary: {},
   }
 }
 
@@ -223,4 +224,24 @@ export function todaysFocusMinutes(sessions) {
   return sessions
     .filter((s) => todayKey(new Date(s.endedAt)) === today)
     .reduce((sum, s) => sum + s.minutes, 0)
+}
+
+// ---- Daily diary (one freeform page per day) ----
+
+// Empty text clears the page rather than storing a blank entry.
+export function setDiaryEntry(tracker, dateKey, text) {
+  const trimmed = text.trim()
+  const diary = { ...tracker.diary }
+  if (!trimmed) {
+    delete diary[dateKey]
+  } else {
+    diary[dateKey] = { text: trimmed, updatedAt: now() }
+  }
+  return { ...tracker, diary }
+}
+
+// Most recent first; today always has a page even before it's written.
+export function diaryDays(diary) {
+  const keys = new Set([todayKey(), ...Object.keys(diary)])
+  return Array.from(keys).sort((a, b) => b.localeCompare(a))
 }

@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import { todaysFocusMinutes } from '../../data/index.js'
+import { IconBell, IconBellOff } from '../icons.jsx'
 import './FocusTimer.css'
 
 const STORAGE_KEY = 'study-ledger:timer'
+const MUTE_KEY = 'study-ledger:timer-muted'
 const PRESETS = [25, 45, 60, 90]
 const KINDS = [
   { value: 'study', label: 'Study' },
@@ -28,6 +30,43 @@ function saveStoredTimer(state) {
   }
 }
 
+// Plays a sustained ~5.5s alarm tone via Web Audio so no sound asset needs to ship with
+// the app. A tremolo LFO gives it a continuous "ringing" pulse instead of a flat drone.
+function playChime(ctx) {
+  const now = ctx.currentTime
+  const duration = 5.5
+  const attack = 0.05
+  const release = 0.4
+
+  const tone = ctx.createOscillator()
+  tone.type = 'sine'
+  tone.frequency.setValueAtTime(880, now) // A5
+  tone.frequency.setValueAtTime(1046.5, now + duration / 2) // shift to C6 midway
+
+  const tremolo = ctx.createOscillator()
+  tremolo.type = 'sine'
+  tremolo.frequency.value = 5 // pulses per second
+
+  const tremoloDepth = ctx.createGain()
+  tremoloDepth.gain.value = 0.1
+
+  const mainGain = ctx.createGain()
+  mainGain.gain.setValueAtTime(0, now)
+  mainGain.gain.linearRampToValueAtTime(0.18, now + attack)
+  mainGain.gain.setValueAtTime(0.18, now + duration - release)
+  mainGain.gain.linearRampToValueAtTime(0, now + duration)
+
+  tremolo.connect(tremoloDepth)
+  tremoloDepth.connect(mainGain.gain)
+  tone.connect(mainGain)
+  mainGain.connect(ctx.destination)
+
+  tone.start(now)
+  tremolo.start(now)
+  tone.stop(now + duration)
+  tremolo.stop(now + duration)
+}
+
 export default function FocusTimer({ sessions, onLogSession }) {
   const stored = useRef(loadStoredTimer()).current
   const [label, setLabel] = useState(stored?.label ?? '')
@@ -36,6 +75,8 @@ export default function FocusTimer({ sessions, onLogSession }) {
   const [endAt, setEndAt] = useState(stored?.endAt ?? null)
   const [pausedRemainingSec, setPausedRemainingSec] = useState(stored?.pausedRemainingSec ?? null)
   const [now, setNow] = useState(Date.now())
+  const [muted, setMuted] = useState(() => localStorage.getItem(MUTE_KEY) === '1')
+  const audioCtxRef = useRef(null)
 
   const isRunning = endAt != null
   const isPaused = pausedRemainingSec != null
@@ -61,20 +102,48 @@ export default function FocusTimer({ sessions, onLogSession }) {
 
   useEffect(() => {
     if (isRunning && remainingSec === 0) {
-      finishSession(durationMin)
+      finishSession(durationMin, { chime: true })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning, remainingSec])
 
-  function finishSession(elapsedMin) {
+  function getAudioContext() {
+    if (!audioCtxRef.current) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext
+      audioCtxRef.current = AudioCtx ? new AudioCtx() : null
+    }
+    return audioCtxRef.current
+  }
+
+  function finishSession(elapsedMin, { chime = false } = {}) {
     if (elapsedMin > 0) {
       onLogSession({ label: label.trim() || 'Focus session', kind, minutes: elapsedMin })
     }
     setEndAt(null)
     setPausedRemainingSec(null)
+    if (chime && !muted) {
+      const ctx = getAudioContext()
+      if (ctx) {
+        ctx.resume?.().then(() => playChime(ctx)).catch(() => {})
+      }
+    }
+  }
+
+  function toggleMuted() {
+    setMuted((m) => {
+      const next = !m
+      try {
+        localStorage.setItem(MUTE_KEY, next ? '1' : '0')
+      } catch {
+        // localStorage unavailable — mute preference just won't persist
+      }
+      return next
+    })
   }
 
   function handleStart() {
+    // Unlock/create the AudioContext on a real user gesture so the chime can play later.
+    getAudioContext()?.resume?.().catch(() => {})
     const totalSec = isPaused ? pausedRemainingSec : durationMin * 60
     setEndAt(Date.now() + totalSec * 1000)
     setPausedRemainingSec(null)
@@ -103,7 +172,18 @@ export default function FocusTimer({ sessions, onLogSession }) {
     <section className="tracker-card focus-timer">
       <div className="tracker-card-header">
         <h2>Focus session</h2>
-        {todayMin > 0 && <span className="focus-timer-today">Today: {todayMin} min</span>}
+        <div className="focus-timer-header-right">
+          {todayMin > 0 && <span className="focus-timer-today">Today: {todayMin} min</span>}
+          <button
+            type="button"
+            className="focus-timer-mute"
+            onClick={toggleMuted}
+            title={muted ? 'Unmute completion sound' : 'Mute completion sound'}
+            aria-label={muted ? 'Unmute completion sound' : 'Mute completion sound'}
+          >
+            {muted ? <IconBellOff size={16} /> : <IconBell size={16} />}
+          </button>
+        </div>
       </div>
 
       <div className={`focus-timer-display${isRunning ? ' is-running' : ''}`}>

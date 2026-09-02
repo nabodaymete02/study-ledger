@@ -61,4 +61,6 @@ export {
   groupLongTermTasks,
   logSession,
   todaysFocusMinutes,
+  setDiaryEntry,
+  diaryDays,
 } from './trackerData.js'

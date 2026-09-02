@@ -1,0 +1,122 @@
+.diary-pick-form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.diary-pick-form input {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--surface2);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+}
+
+.diary-pick-form input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.diary-day-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.diary-day {
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--surface2);
+  overflow: hidden;
+}
+
+.diary-day.is-open {
+  border-color: var(--accent);
+}
+
+.diary-day-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  color: var(--ink);
+  text-align: left;
+}
+
+.diary-day-weekday {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--muted);
+  min-width: 34px;
+}
+
+.diary-day-full {
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.diary-day-suffix {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border-radius: 2px;
+  padding: 1px 8px;
+}
+
+.diary-day-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+.diary-day-caret {
+  font-family: var(--mono);
+  color: var(--muted);
+  width: 14px;
+  text-align: center;
+}
+
+.diary-page {
+  padding: 0 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.diary-page-text {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.diary-page-text:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.diary-page-actions {
+  display: flex;
+  justify-content: flex-end;
+}

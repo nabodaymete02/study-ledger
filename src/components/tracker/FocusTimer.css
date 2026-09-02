@@ -1,6 +1,30 @@
+.focus-timer-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .focus-timer-today {
   font-size: 0.8rem;
   color: var(--muted);
+}
+
+.focus-timer-mute {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.15s ease, color 0.15s ease;
+}
+
+.focus-timer-mute:hover {
+  opacity: 1;
+  color: var(--ink);
 }
 
 .focus-timer-display {

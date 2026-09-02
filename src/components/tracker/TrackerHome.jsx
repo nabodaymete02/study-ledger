@@ -19,12 +19,14 @@ import {
   toggleLongTermTask,
   deleteLongTermTask,
   logSession,
+  setDiaryEntry,
 } from '../../data/index.js'
 import FocusTimer from './FocusTimer.jsx'
 import HabitTracker from './HabitTracker.jsx'
 import ImportantDates from './ImportantDates.jsx'
 import DailyBucket from './DailyBucket.jsx'
 import LongTermTasks from './LongTermTasks.jsx'
+import DailyDiary from './DailyDiary.jsx'
 import './TrackerHome.css'
 
 export default function TrackerHome() {
@@ -34,7 +36,7 @@ export default function TrackerHome() {
   useEffect(() => {
     getTracker()
       .then((loaded) => {
-        const base = loaded ?? createDefaultTracker()
+        const base = loaded ? { ...loaded, diary: loaded.diary ?? {} } : createDefaultTracker()
         const pruned = pruneDoneToday(base)
         setTracker(pruned)
         if (!loaded || pruned !== base) saveTracker(pruned).catch(() => {})
@@ -130,6 +132,11 @@ export default function TrackerHome() {
           onAdd={(task) => update((t) => addLongTermTask(t, task))}
           onToggle={(id) => update((t) => toggleLongTermTask(t, id))}
           onDelete={(id) => update((t) => deleteLongTermTask(t, id))}
+        />
+
+        <DailyDiary
+          diary={tracker.diary}
+          onSave={(dateKey, text) => update((t) => setDiaryEntry(t, dateKey, text))}
         />
       </div>
     </main>
